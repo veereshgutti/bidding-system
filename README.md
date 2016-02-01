@@ -9,10 +9,11 @@ bidding system facilitates bidding & selling of listed items to registered users
   - User cannot bid removed Item
   - User cannot bid with price lower than item base price
   - User can view bidder to perticuler item, sorted by lowest price
-  - Multiple user can bid of one item 
+  - Multiple users can bid for one item
+
 ### Installation
 ```sh
 $ git clone [git-repo-url]
 $ cd bidding-system
 $ gradle build
-```# bidding-system
+```
