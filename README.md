@@ -5,7 +5,11 @@ bidding system facilitates bidding & selling of listed items to registered users
   - Only Registered user can bid for item
   - Bid expiry is time should be in Minutes
   - After bid timeout user with lowest bidding price will win
-
+  - Item will be removed, if no user bid within timeout
+  - User cannot bid removed Item
+  - User cannot bid with price lower than item base price
+  - User can view bidder to perticuler item, sorted by lowest price
+  - Multiple user can bid of one item 
 ### Installation
 ```sh
 $ git clone [git-repo-url]
