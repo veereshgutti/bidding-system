@@ -1,33 +1,36 @@
-import com.gutti.auction.core.AuctionItem;
-import com.gutti.auction.core.AuctionSystem;
-import com.gutti.auction.core.Item;
-import com.gutti.auction.core.User;
-import com.gutti.auction.exception.ItemNotExistException;
-import com.gutti.auction.exception.MinPriceException;
-import com.gutti.auction.exception.NoBiddersExistException;
-import com.gutti.auction.exception.UserNotExistException;
+import com.gutti.auction.core.*;
+import com.gutti.auction.entity.AuctionItem;
+import com.gutti.auction.entity.Item;
+import com.gutti.auction.entity.User;
+import com.gutti.auction.exception.*;
 
 import java.util.Map;
 import java.util.Scanner;
 
 /**
+ * To Check all basic functionality of bidding system, by typical switch case statements.
  * Created by Veeresh Gutti on 31/1/16.
  */
 public class Main {
 
     public static void main(String[] args) {
         AuctionSystem auctionSystem = AuctionSystem.getInstance();
+        UserBase userBase = UserBase.getInstance();
 
-        auctionSystem.addItemToAuction(new Item(123, "watch", 10, "Apple Watch"), 5);
-        auctionSystem.addItemToAuction(new Item(124, "watch", 15, "Apple Watch 16GB"), 6);
-        auctionSystem.registerUser(new User(1,"veeresh","Bangalore"));
-        auctionSystem.registerUser(new User(2,"gutti","Bangalore"));
+        auctionSystem.addItemToAuction(new Item(123, "watch", 10, "Apple Watch"), 1);
+        auctionSystem.addItemToAuction(new Item(124, "watch", 15, "Apple Watch 16GB"), 2);
+        try {
+            userBase.registerUser(new User(1,"veeresh","Bangalore"));
+            userBase.registerUser(new User(2,"gutti","Bangalore"));
+        } catch (UserAlreadyExistException e) {
+            e.printStackTrace();
+        }
 
         System.out.println("WelCome to Auction System");
         while(true){
             System.out.println("1: Add Item to Auction\n2: List auctioned Items");
             System.out.println("3: Register User\n4: List Registered User");
-            System.out.println("5: Bid for Item\n6 List the biddings");
+            System.out.println("5: Bid for Item\n6: List the biddings");
             Scanner scanner = new Scanner(System.in);
             int option = Integer.parseInt(scanner.next());
             switch (option){
@@ -53,12 +56,16 @@ public class Main {
                     user.setUserName(scanner.next());
                     System.out.print("User Address:");
                     user.setAddress(scanner.next());
-                    auctionSystem.registerUser(user);
+                    try {
+                        userBase.registerUser(user);
+                    } catch (UserAlreadyExistException e) {
+                        e.printStackTrace();
+                    }
                     System.out.println("User successfuly registerd");
                     break;
                 case 4:
                     System.out.println("List of Registered User");
-                    for (User user1 : auctionSystem.getRegisterUser()) {
+                    for (User user1 : userBase.getRegisteredUsers()) {
                         System.out.println(user1);
                     }
                     break;

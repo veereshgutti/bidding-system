@@ -3,6 +3,9 @@ package com.gutti.auction.core;
 import java.util.TimerTask;
 
 /**
+ * Sets Expiry time here for items putting for auction, time out delay is in minutes
+ * on expiry item is removed for auction items, and winner is declared, if any user bid for that item exists
+ *
  * Created by Veeresh Gutti on 31/1/16.
  */
 public class ItemTimeout extends TimerTask{

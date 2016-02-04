@@ -1,10 +1,8 @@
 import com.gutti.auction.core.AuctionSystem;
-import com.gutti.auction.core.Item;
-import com.gutti.auction.core.User;
-import com.gutti.auction.exception.ItemNotExistException;
-import com.gutti.auction.exception.MinPriceException;
-import com.gutti.auction.exception.NoBiddersExistException;
-import com.gutti.auction.exception.UserNotExistException;
+import com.gutti.auction.entity.Item;
+import com.gutti.auction.entity.User;
+import com.gutti.auction.core.UserBase;
+import com.gutti.auction.exception.*;
 
 import java.util.Random;
 
@@ -35,10 +33,14 @@ public class Main1 {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                AuctionSystem auctionSystem = AuctionSystem.getInstance();
+                UserBase userBase = UserBase.getInstance();
                 for (int i = 1; i <= 10; i++) {
-                    auctionSystem.registerUser(new User(i,"name" +i,"address"+i));
-                    //System.out.println("userAdded: " + auctionSystem.getRegisterUser());
+                    try {
+                        userBase.registerUser(new User(i,"name" +i,"address"+i));
+                    } catch (UserAlreadyExistException e) {
+                        e.printStackTrace();
+                    }
+                    //System.out.println("userAdded: " + auctionSystem.getRegisteredUsers());
                     /*try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -57,10 +59,11 @@ public class Main1 {
                     e.printStackTrace();
                 }
                 AuctionSystem auctionSystem = AuctionSystem.getInstance();
+                UserBase userBase = UserBase.getInstance();
                 for(int j=1; j<= 10;j++) {
                     for (int i = 1; i <= 100; i++) {
                         try {
-                            auctionSystem.getRegisterUser();
+                            userBase.getRegisteredUsers();
                             auctionSystem.bid(i * j, j, Math.abs(new Random().nextInt(90) + 10));
                             System.out.println(i*j+" : "+auctionSystem.getAuctionedItemDetail(i*j));
                         } catch (UserNotExistException e) {
